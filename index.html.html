@@ -1,0 +1,1447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nishchith U Shetty — GTM & AI Automation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:        #060612;
+  --bg2:       #0b0b1a;
+  --bg3:       #0e0e20;
+  --surface:   #13132a;
+  --card:      #0f0f22;
+  --border:    #1c1c38;
+  --border2:   #2a2a4a;
+  --violet:    #c084fc;
+  --violet2:   #a855f7;
+  --violet-dim:rgba(192,132,252,0.1);
+  --violet-glow:rgba(192,132,252,0.06);
+  --orange:    #fb923c;
+  --orange2:   #f97316;
+  --orange-dim:rgba(251,146,60,0.1);
+  --text:      #e8e8f4;
+  --text2:     #7070a0;
+  --text3:     #38385a;
+  --white:     #f4f4fc;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 400;
+  overflow-x: hidden;
+}
+
+/* ── NOISE TEXTURE ── */
+body::before {
+  content:'';
+  position:fixed; inset:0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;
+  z-index:9999;
+  opacity:0.6;
+}
+
+/* ── NAV ── */
+nav {
+  position:fixed; top:0; left:0; right:0;
+  z-index:500;
+  height:60px;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 3rem;
+  background:rgba(6,6,18,0.85);
+  border-bottom:1px solid var(--border);
+  backdrop-filter:blur(16px);
+}
+
+.nav-logo {
+  font-family:'Bebas Neue', sans-serif;
+  font-size:1.4rem;
+  letter-spacing:0.08em;
+  color:var(--white);
+  text-decoration:none;
+}
+.nav-logo em {
+  font-style:normal;
+  color:var(--violet);
+}
+
+.nav-links {
+  display:flex; gap:0;
+  border:1px solid var(--border);
+}
+.nav-links a {
+  font-family:'DM Mono', monospace;
+  font-size:0.6rem;
+  font-weight:400;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--text2);
+  text-decoration:none;
+  padding:0.6rem 1.4rem;
+  border-right:1px solid var(--border);
+  transition:color 0.2s, background 0.2s;
+}
+.nav-links a:last-child { border-right:none; }
+.nav-links a:hover { color:var(--violet); background:var(--violet-glow); }
+
+.nav-cta {
+  font-family:'DM Mono', monospace;
+  font-size:0.6rem;
+  font-weight:500;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  background:var(--violet);
+  color:var(--bg);
+  padding:0.65rem 1.6rem;
+  text-decoration:none;
+  transition:all 0.2s;
+}
+.nav-cta:hover { background:var(--violet2); box-shadow:0 0 28px rgba(192,132,252,0.35); }
+
+/* ── HERO ── */
+#hero {
+  min-height:100vh;
+  padding-top:60px;
+  position:relative;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+}
+
+/* Gradient blobs */
+.blob {
+  position:absolute;
+  border-radius:50%;
+  filter:blur(120px);
+  pointer-events:none;
+}
+.blob-1 {
+  width:700px; height:700px;
+  background:rgba(192,132,252,0.08);
+  top:-200px; right:-100px;
+}
+.blob-2 {
+  width:500px; height:500px;
+  background:rgba(251,146,60,0.06);
+  bottom:0; left:-100px;
+}
+.blob-3 {
+  width:300px; height:300px;
+  background:rgba(192,132,252,0.04);
+  bottom:200px; right:200px;
+}
+
+.hero-content {
+  flex:1;
+  display:grid;
+  grid-template-columns:1fr 480px;
+  position:relative;
+  z-index:1;
+}
+
+.hero-left {
+  padding:5rem 3.5rem 3rem;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  border-right:1px solid var(--border);
+}
+
+.hero-eyebrow {
+  display:flex; align-items:center; gap:0.8rem;
+  font-family:'DM Mono', monospace;
+  font-size:0.62rem;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:var(--violet);
+  margin-bottom:2rem;
+  opacity:0;
+  animation:up 0.5s 0.2s forwards;
+}
+.hero-eyebrow::before {
+  content:'';
+  display:inline-block;
+  width:24px; height:1px;
+  background:var(--violet);
+}
+
+.hero-name {
+  font-family:'Bebas Neue', sans-serif;
+  font-size:clamp(4rem, 8vw, 8.5rem);
+  line-height:0.92;
+  letter-spacing:0.02em;
+  color:var(--white);
+  opacity:0;
+  animation:up 0.6s 0.4s forwards;
+}
+.hero-name .accent {
+  color:transparent;
+  -webkit-text-stroke:1px var(--violet);
+  display:block;
+}
+.hero-name .accent-orange {
+  color:var(--orange);
+}
+
+.hero-sub {
+  margin-top:2rem;
+  font-size:0.95rem;
+  color:var(--text2);
+  line-height:1.85;
+  max-width:50ch;
+  font-weight:300;
+  opacity:0;
+  animation:up 0.5s 0.7s forwards;
+}
+.hero-sub strong { color:var(--text); font-weight:500; }
+
+.hero-tags {
+  display:flex; flex-wrap:wrap; gap:0.4rem;
+  margin-top:2rem;
+  opacity:0;
+  animation:up 0.5s 0.9s forwards;
+}
+.tag {
+  font-family:'DM Mono', monospace;
+  font-size:0.55rem;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  font-weight:400;
+  padding:0.28rem 0.75rem;
+  border:1px solid var(--border2);
+  color:var(--text3);
+  background:var(--surface);
+  transition:all 0.2s;
+}
+.tag.lit {
+  border-color:var(--violet);
+  color:var(--violet);
+  background:var(--violet-dim);
+}
+.tag.orange {
+  border-color:var(--orange);
+  color:var(--orange);
+  background:var(--orange-dim);
+}
+
+.hero-btns {
+  display:flex; gap:1rem;
+  margin-top:2.5rem;
+  opacity:0;
+  animation:up 0.5s 1.1s forwards;
+}
+.btn-v {
+  font-family:'DM Mono', monospace;
+  font-size:0.62rem;
+  font-weight:500;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+  background:var(--violet);
+  color:var(--bg);
+  padding:0.9rem 2.2rem;
+  text-decoration:none;
+  transition:all 0.2s;
+}
+.btn-v:hover { background:var(--violet2); box-shadow:0 0 28px rgba(192,132,252,0.35); }
+.btn-ghost {
+  font-family:'DM Mono', monospace;
+  font-size:0.62rem;
+  font-weight:400;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+  border:1px solid var(--border2);
+  color:var(--text2);
+  padding:0.9rem 2.2rem;
+  text-decoration:none;
+  transition:all 0.2s;
+}
+.btn-ghost:hover { border-color:var(--orange); color:var(--orange); }
+
+@keyframes up {
+  from { opacity:0; transform:translateY(20px); }
+  to { opacity:1; transform:translateY(0); }
+}
+
+/* Hero Right - Stats Panel */
+.hero-right {
+  background:var(--bg2);
+  border-left:1px solid var(--border);
+  display:flex;
+  flex-direction:column;
+  padding:3.5rem 2.5rem;
+  gap:2rem;
+  justify-content:center;
+  position:relative;
+  overflow:hidden;
+}
+.hero-right::before {
+  content:'';
+  position:absolute;
+  top:0; left:0;
+  width:100%; height:3px;
+  background:linear-gradient(90deg, var(--violet), var(--orange));
+}
+
+.panel-label {
+  font-family:'DM Mono', monospace;
+  font-size:0.55rem;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:var(--text3);
+  margin-bottom:0.3rem;
+}
+
+.big-stat {
+  display:flex;
+  flex-direction:column;
+  gap:0.15rem;
+  padding-bottom:2rem;
+  border-bottom:1px solid var(--border);
+}
+.big-stat:last-child { border-bottom:none; padding-bottom:0; }
+.big-stat .val {
+  font-family:'Bebas Neue', sans-serif;
+  font-size:4.5rem;
+  line-height:0.9;
+  color:var(--violet);
+  letter-spacing:0.02em;
+}
+.big-stat .val.orange { color:var(--orange); }
+.big-stat .desc {
+  font-size:0.72rem;
+  color:var(--text2);
+  line-height:1.7;
+  font-weight:300;
+  max-width:26ch;
+}
+
+/* ── TICKER ── */
+.ticker {
+  background:var(--surface);
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  padding:0.7rem 0;
+  overflow:hidden;
+}
+.ticker-inner {
+  display:flex;
+  white-space:nowrap;
+  animation:roll 40s linear infinite;
+}
+@keyframes roll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+.ticker-item {
+  font-family:'DM Mono', monospace;
+  font-size:0.58rem;
+  font-weight:400;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  color:var(--text2);
+  padding:0 2rem;
+  flex-shrink:0;
+  display:flex; align-items:center; gap:0.8rem;
+}
+.ticker-item::after {
+  content:'·';
+  color:var(--violet);
+  font-size:1.2rem;
+  line-height:0;
+}
+
+/* ── SECTION COMMONS ── */
+.wrap { padding:7rem 3.5rem; }
+
+.eyebrow {
+  font-family:'DM Mono', monospace;
+  font-size:0.58rem;
+  letter-spacing:0.28em;
+  text-transform:uppercase;
+  color:var(--orange);
+  display:flex; align-items:center; gap:0.8rem;
+  margin-bottom:1.2rem;
+}
+.eyebrow::before {
+  content:'';
+  display:inline-block;
+  width:20px; height:1px;
+  background:var(--orange);
+}
+
+.sec-title {
+  font-family:'Bebas Neue', sans-serif;
+  font-size:clamp(2.8rem, 5.5vw, 5rem);
+  line-height:0.95;
+  letter-spacing:0.03em;
+  color:var(--white);
+}
+.sec-title em {
+  font-style:normal;
+  color:transparent;
+  -webkit-text-stroke:1px var(--violet);
+}
+
+/* ── IMPACT ── */
+#impact { background:var(--bg2); border-top:1px solid var(--border); }
+
+.impact-head {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:4rem;
+  align-items:end;
+  margin-bottom:4rem;
+}
+.impact-sub {
+  font-size:0.85rem;
+  color:var(--text2);
+  line-height:1.85;
+  font-weight:300;
+}
+
+.impact-grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1px;
+  background:var(--border);
+}
+.i-card {
+  background:var(--bg2);
+  padding:2.5rem 2rem;
+  position:relative;
+  overflow:hidden;
+  transition:background 0.3s;
+}
+.i-card:hover { background:var(--bg3); }
+.i-card::after {
+  content:'';
+  position:absolute;
+  top:0; left:0;
+  width:3px; height:0;
+  background:var(--violet);
+  transition:height 0.4s;
+}
+.i-card:hover::after { height:100%; }
+.i-card.orange-bar::after { background:var(--orange); }
+
+.i-num {
+  font-family:'Bebas Neue', sans-serif;
+  font-size:4rem;
+  line-height:0.95;
+  color:var(--violet);
+  letter-spacing:0.02em;
+  display:block;
+}
+.i-num.orange { color:var(--orange); }
+.i-label {
+  font-size:0.75rem;
+  color:var(--text2);
+  line-height:1.7;
+  margin-top:0.6rem;
+  font-weight:300;
+  max-width:26ch;
+}
+.i-src {
+  font-family:'DM Mono', monospace;
+  font-size:0.52rem;
+  color:var(--text3);
+  letter-spacing:0.1em;
+  margin-top:0.8rem;
+  padding-top:0.8rem;
+  border-top:1px solid var(--border);
+}
+
+/* ── SERVICES ── */
+#services { background:var(--bg); border-top:1px solid var(--border); }
+
+.svc-head {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:4rem;
+  align-items:end;
+  margin-bottom:4rem;
+}
+
+.svc-grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1px;
+  background:var(--border);
+}
+.svc {
+  background:var(--bg);
+  padding:2.5rem 2rem;
+  position:relative;
+  transition:background 0.3s;
+  overflow:hidden;
+}
+.svc:hover { background:var(--surface); }
+
+.svc-num {
+  font-family:'DM Mono', monospace;
+  font-size:0.52rem;
+  letter-spacing:0.18em;
+  color:var(--text3);
+  margin-bottom:1.5rem;
+  display:flex; align-items:center; gap:0.6rem;
+}
+.svc-num::after {
+  content:'';
+  flex:1; height:1px;
+  background:var(--border2);
+}
+
+.svc-icon {
+  width:40px; height:40px;
+  background:var(--surface);
+  border:1px solid var(--border2);
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.2rem;
+  margin-bottom:1.2rem;
+  transition:all 0.2s;
+}
+.svc:hover .svc-icon {
+  background:var(--violet-dim);
+  border-color:var(--violet);
+}
+
+.svc-name {
+  font-family:'Bebas Neue', sans-serif;
+  font-size:1.5rem;
+  letter-spacing:0.04em;
+  color:var(--white);
+  margin-bottom:0.8rem;
+  line-height:1.1;
+}
+.svc-desc {
+  font-size:0.73rem;
+  color:var(--text2);
+  line-height:1.8;
+  font-weight:300;
+}
+.svc-chips {
+  display:flex; flex-wrap:wrap; gap:0.3rem;
+  margin-top:1.2rem;
+}
+.chip {
+  font-family:'DM Mono', monospace;
+  font-size:0.5rem;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  padding:0.22rem 0.55rem;
+  background:var(--bg3);
+  color:var(--text3);
+  border:1px solid var(--border);
+}
+.svc:hover .chip { color:var(--text2); border-color:var(--border2); }
+
+.svc-link {
+  display:inline-flex; align-items:center; gap:0.4rem;
+  font-family:'DM Mono', monospace;
+  font-size:0.58rem;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+  color:var(--violet);
+  text-decoration:none;
+  margin-top:1.5rem;
+  opacity:0;
+  transform:translateX(-6px);
+  transition:opacity 0.3s, transform 0.3s;
+}
+.svc:hover .svc-link { opacity:1; transform:translateX(0); }
+
+/* ── SYSTEMS ── */
+#systems { background:var(--bg2); border-top:1px solid var(--border); }
+
+.sys-grid {
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:1px;
+  background:var(--border);
+  margin-top:4rem;
+}
+.sys-card {
+  background:var(--bg2);
+  padding:2.5rem;
+  position:relative;
+  transition:background 0.3s;
+  overflow:hidden;
+}
+.sys-card:hover { background:var(--card); }
+
+.sys-cat {
+  font-family:'DM Mono', monospace;
+  font-size:0.55rem;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  color:var(--orange);
+  margin-bottom:0.8rem;
+}
+.sys-title {
+  font-family:'Bebas Neue', sans-serif;
+  font-size:1.6rem;
+  letter-spacing:0.03em;
+  color:var(--white);
+  margin-bottom:0.7rem;
+  line-height:1.1;
+}
+.sys-desc {
+  font-size:0.73rem;
+  color:var(--text2);
+  line-height:1.8;
+  font-weight:300;
+  margin-bottom:1.5rem;
+}
+
+/* Flow diagram */
+.flow {
+  background:var(--bg);
+  border:1px solid var(--border);
+  padding:1rem 1.2rem;
+  display:flex; align-items:center;
+  gap:0;
+  overflow-x:auto;
+  scrollbar-width:none;
+  margin-bottom:1.2rem;
+}
+.flow::-webkit-scrollbar { display:none; }
+.f-node {
+  display:flex; flex-direction:column;
+  align-items:center; gap:0.3rem;
+  flex-shrink:0;
+}
+.f-box {
+  padding:0.35rem 0.65rem;
+  background:var(--surface);
+  border:1px solid var(--border2);
+  font-family:'DM Mono', monospace;
+  font-size:0.5rem;
+  letter-spacing:0.06em;
+  color:var(--text2);
+  white-space:nowrap;
+  transition:border-color 0.2s, color 0.2s;
+}
+.sys-card:hover .f-box { border-color:var(--border2); }
+.f-box.v { border-color:var(--violet); color:var(--violet); background:var(--violet-dim); }
+.f-box.o { border-color:var(--orange); color:var(--orange); background:var(--orange-dim); }
+.f-tool {
+  font-family:'DM Mono', monospace;
+  font-size:0.45rem;
+  color:var(--text3);
+  letter-spacing:0.06em;
+}
+.f-arr {
+  font-size:0.65rem; color:var(--text3);
+  padding:0 0.25rem;
+  flex-shrink:0;
+  margin-bottom:0.8rem;
+}
+
+.sys-result {
+  font-family:'DM Mono', monospace;
+  font-size:0.62rem;
+  color:var(--text2);
+  display:flex; align-items:center; gap:0.5rem;
+  padding-top:1rem;
+  border-top:1px solid var(--border);
+}
+.sys-result strong { color:var(--violet); }
+
+/* ── STACK ── */
+#stack { background:var(--bg); border-top:1px solid var(--border); }
+
+.stack-layout {
+  display:grid;
+  grid-template-columns:280px 1fr;
+  gap:6rem;
+  margin-top:4rem;
+}
+.stack-intro {
+  font-size:0.82rem;
+  color:var(--text2);
+  line-height:1.85;
+  font-weight:300;
+}
+.stack-rows {
+  display:flex;
+  flex-direction:column;
+  gap:1px;
+  background:var(--border);
+}
+.sk-row {
+  background:var(--bg);
+  padding:1.1rem 1.5rem;
+  display:grid;
+  grid-template-columns:170px 1fr;
+  gap:2rem;
+  align-items:center;
+  transition:background 0.2s;
+}
+.sk-row:hover { background:var(--surface); }
+.sk-cat {
+  font-family:'DM Mono', monospace;
+  font-size:0.55rem;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--text3);
+}
+.sk-tools {
+  display:flex; flex-wrap:wrap; gap:0.35rem;
+}
+.sk-chip {
+  font-family:'DM Mono', monospace;
+  font-size:0.56rem;
+  letter-spacing:0.07em;
+  color:var(--text2);
+  padding:0.2rem 0.55rem;
+  background:var(--surface);
+  border:1px solid var(--border);
+  transition:all 0.2s;
+}
+.sk-row:hover .sk-chip {
+  border-color:var(--border2);
+  color:var(--text);
+}
+
+/* ── BOOK ── */
+#book { background:var(--bg2); border-top:1px solid var(--border); }
+
+.book-layout {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:5rem;
+  margin-top:4rem;
+  align-items:start;
+}
+.book-info p {
+  font-size:0.85rem;
+  color:var(--text2);
+  line-height:1.85;
+  font-weight:300;
+  margin-bottom:2.5rem;
+}
+.book-facts {
+  display:flex; flex-direction:column; gap:1px;
+  background:var(--border);
+}
+.bf {
+  background:var(--bg2);
+  padding:0.9rem 1.2rem;
+  display:flex; align-items:center; gap:1rem;
+  font-size:0.73rem;
+  color:var(--text2);
+  transition:background 0.2s;
+}
+.bf:hover { background:var(--surface); }
+.bf-dot {
+  width:6px; height:6px;
+  border-radius:50%;
+  background:var(--violet);
+  flex-shrink:0;
+}
+.bf-dot.orange { background:var(--orange); }
+.bf a { color:var(--violet); text-decoration:none; }
+
+.book-form {
+  background:var(--bg);
+  border:1px solid var(--border);
+  padding:2.8rem;
+  position:relative;
+}
+.book-form::before {
+  content:'';
+  position:absolute;
+  top:0; left:0;
+  width:100%; height:2px;
+  background:linear-gradient(90deg, var(--violet), var(--orange));
+}
+
+.form-label-top {
+  font-family:'DM Mono', monospace;
+  font-size:0.55rem;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:var(--orange);
+  display:flex; align-items:center; gap:0.5rem;
+  margin-bottom:2rem;
+}
+
+.fg { margin-bottom:1rem; }
+.fg label {
+  display:block;
+  font-family:'DM Mono', monospace;
+  font-size:0.52rem;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--text3);
+  margin-bottom:0.5rem;
+}
+.fg input, .fg select, .fg textarea {
+  width:100%;
+  background:var(--bg2);
+  border:1px solid var(--border2);
+  color:var(--text);
+  font-family:'DM Sans', sans-serif;
+  font-size:0.8rem;
+  font-weight:300;
+  padding:0.8rem 1rem;
+  outline:none;
+  transition:border-color 0.2s;
+  appearance:none;
+}
+.fg input:focus, .fg select:focus, .fg textarea:focus { border-color:var(--violet); }
+.fg select option { background:var(--bg2); }
+.fg textarea { resize:vertical; min-height:90px; }
+.form-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+
+.submit-btn {
+  width:100%;
+  background:var(--violet);
+  color:var(--bg);
+  border:none;
+  font-family:'DM Mono', monospace;
+  font-size:0.62rem;
+  font-weight:500;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  padding:1rem;
+  cursor:pointer;
+  margin-top:0.5rem;
+  transition:all 0.2s;
+}
+.submit-btn:hover { background:var(--violet2); box-shadow:0 0 28px rgba(192,132,252,0.3); }
+.form-note {
+  font-family:'DM Mono', monospace;
+  font-size:0.5rem;
+  color:var(--text3);
+  margin-top:0.8rem;
+  line-height:1.7;
+}
+
+.success-box { display:none; text-align:center; padding:3.5rem 2rem; }
+.success-box .big {
+  font-family:'Bebas Neue', sans-serif;
+  font-size:3.5rem;
+  color:var(--violet);
+  letter-spacing:0.05em;
+  display:block;
+  margin-bottom:0.5rem;
+}
+.success-box p { font-size:0.78rem; color:var(--text2); }
+
+/* ── FOOTER ── */
+footer {
+  background:var(--bg3);
+  border-top:1px solid var(--border);
+  padding:2rem 3.5rem;
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  align-items:center;
+  gap:2rem;
+}
+.footer-logo {
+  font-family:'Bebas Neue', sans-serif;
+  font-size:1.1rem;
+  letter-spacing:0.08em;
+  color:var(--white);
+}
+.footer-logo em { font-style:normal; color:var(--violet); }
+.footer-nav {
+  display:flex; gap:0; list-style:none;
+  border:1px solid var(--border);
+}
+.footer-nav a {
+  font-family:'DM Mono', monospace;
+  font-size:0.53rem;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--text3);
+  text-decoration:none;
+  padding:0.5rem 1.2rem;
+  border-right:1px solid var(--border);
+  transition:color 0.2s, background 0.2s;
+}
+.footer-nav li:last-child a { border-right:none; }
+.footer-nav a:hover { color:var(--violet); background:var(--violet-glow); }
+.footer-copy {
+  font-family:'DM Mono', monospace;
+  font-size:0.5rem;
+  letter-spacing:0.1em;
+  color:var(--text3);
+  text-align:right;
+}
+
+/* ── REVEAL ── */
+.reveal { opacity:0; transform:translateY(20px); transition:opacity 0.7s, transform 0.7s; }
+.reveal.visible { opacity:1; transform:none; }
+
+/* ── MOBILE ── */
+@media(max-width:900px){
+  .hero-content { grid-template-columns:1fr; }
+  .hero-right { display:none; }
+  .impact-head, .svc-head, .book-layout, .impact-grid, .svc-grid { grid-template-columns:1fr; }
+  .sys-grid { grid-template-columns:1fr; }
+  .stack-layout { grid-template-columns:1fr; gap:2rem; }
+  nav { padding:0 1.5rem; }
+  .nav-links { display:none; }
+  .wrap { padding:4.5rem 1.5rem; }
+  footer { grid-template-columns:1fr; text-align:center; }
+  .footer-nav { justify-content:center; }
+  .footer-copy { text-align:center; }
+  .form-row { grid-template-columns:1fr; }
+  .sk-row { grid-template-columns:1fr; gap:0.6rem; }
+  .hero-left { padding:3rem 1.5rem 2rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <a href="#hero" class="nav-logo">Nishchith<em>.</em></a>
+  <div class="nav-links">
+    <a href="#impact">Impact</a>
+    <a href="#services">Services</a>
+    <a href="#systems">Systems</a>
+    <a href="#stack">Stack</a>
+    <a href="#book">Book</a>
+  </div>
+  <a href="#book" class="nav-cta">Book a Task ↗</a>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+
+  <div class="hero-content">
+    <div class="hero-left">
+      <div class="hero-eyebrow">GTM & AI Automation Engineer · Bengaluru, IN</div>
+      <h1 class="hero-name">
+        I Build<br>
+        <span class="accent">GTM</span>
+        <span class="accent-orange">Machines.</span>
+      </h1>
+      <p class="hero-sub">
+        Full-stack GTM systems — <strong>lead scraping to analytics dashboards</strong> — built with Clay, n8n, Zapier, SuperAGI and 25+ tools. <strong>Two flagship events. 1,500+ qualified leads per quarter. 9% email conversion rate.</strong> Growth that runs without you.
+      </p>
+      <div class="hero-tags">
+        <span class="tag lit">n8n Automation</span>
+        <span class="tag lit">Clay.com</span>
+        <span class="tag lit">Zapier</span>
+        <span class="tag orange">Cold Email</span>
+        <span class="tag orange">WhatsApp Outreach</span>
+        <span class="tag">LinkedIn Automation</span>
+        <span class="tag">AI Agents</span>
+        <span class="tag">GTM Engineering</span>
+      </div>
+      <div class="hero-btns">
+        <a href="#book" class="btn-v">Book a Task</a>
+        <a href="#systems" class="btn-ghost">View Systems →</a>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="big-stat">
+        <div class="panel-label">Email conversion rate</div>
+        <div class="val">9%</div>
+        <div class="desc">On targeted cold outreach across 6,000+ segmented leads</div>
+      </div>
+      <div class="big-stat">
+        <div class="panel-label">Average open rate</div>
+        <div class="val orange">65–70%</div>
+        <div class="desc">Across multi-sequence cold email campaigns — Instantly, PlusVibe, Brevo</div>
+      </div>
+      <div class="big-stat">
+        <div class="panel-label">ICP leads per quarter</div>
+        <div class="val">1,500<span style="font-size:2rem">+</span></div>
+        <div class="desc">Qualified, enriched leads generated per quarter through automated GTM funnels</div>
+      </div>
+      <div class="big-stat">
+        <div class="panel-label">Flagship events delivered</div>
+        <div class="val orange">2</div>
+        <div class="desc">Annual PLF Convergence events — 100+ ICP decision-makers in the room, Bengaluru & Hyderabad</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TICKER ── -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <span class="ticker-item">n8n</span><span class="ticker-item">Zapier</span><span class="ticker-item">Clay</span>
+    <span class="ticker-item">Instantly</span><span class="ticker-item">SuperAGI</span><span class="ticker-item">Creatomate</span>
+    <span class="ticker-item">PhantomBuster</span><span class="ticker-item">Leadmagic</span><span class="ticker-item">Smartlead</span>
+    <span class="ticker-item">WBizz</span><span class="ticker-item">Brevo</span><span class="ticker-item">Activepieces</span>
+    <span class="ticker-item">Surfe</span><span class="ticker-item">ConnectOut</span><span class="ticker-item">Delightloop</span>
+    <span class="ticker-item">Snov.io</span><span class="ticker-item">Lusha</span><span class="ticker-item">Apollo</span>
+    <span class="ticker-item">PlusVibe</span><span class="ticker-item">Prosp</span><span class="ticker-item">Brandjet.ai</span>
+    <!-- dupe for seamless loop -->
+    <span class="ticker-item">n8n</span><span class="ticker-item">Zapier</span><span class="ticker-item">Clay</span>
+    <span class="ticker-item">Instantly</span><span class="ticker-item">SuperAGI</span><span class="ticker-item">Creatomate</span>
+    <span class="ticker-item">PhantomBuster</span><span class="ticker-item">Leadmagic</span><span class="ticker-item">Smartlead</span>
+    <span class="ticker-item">WBizz</span><span class="ticker-item">Brevo</span><span class="ticker-item">Activepieces</span>
+    <span class="ticker-item">Surfe</span><span class="ticker-item">ConnectOut</span><span class="ticker-item">Delightloop</span>
+    <span class="ticker-item">Snov.io</span><span class="ticker-item">Lusha</span><span class="ticker-item">Apollo</span>
+    <span class="ticker-item">PlusVibe</span><span class="ticker-item">Prosp</span><span class="ticker-item">Brandjet.ai</span>
+  </div>
+</div>
+
+<!-- ── IMPACT ── -->
+<section id="impact">
+  <div class="wrap">
+    <div class="impact-head reveal">
+      <div>
+        <div class="eyebrow">Impact</div>
+        <div class="sec-title">Numbers<br>That <em>Ship.</em></div>
+      </div>
+      <p class="impact-sub">
+        Tied to real campaigns, real systems, real rooms. Two flagship annual events for PLF — 100+ ICP decision-makers in the room each time. 150–200 attendees per quarter across IPL & PLF events. Every number earned from live production.
+      </p>
+    </div>
+
+    <div class="impact-grid">
+      <div class="i-card reveal">
+        <span class="i-num" data-target="9" data-suffix="%">9%</span>
+        <div class="i-label">Email conversion rate on targeted cold outreach — 6,000 segmented leads across 3 cohorts</div>
+        <div class="i-src">Instantly · Selzy · Smartlead</div>
+      </div>
+      <div class="i-card reveal">
+        <span class="i-num orange" data-target="67" data-suffix="%">65–70%</span>
+        <div class="i-label">Average email open rate across multi-sequence campaigns — consistently above industry 4x benchmark</div>
+        <div class="i-src">PlusVibe · Brevo · Snov.io</div>
+      </div>
+      <div class="i-card orange-bar reveal">
+        <span class="i-num" data-target="32" data-suffix="%">30–35%</span>
+        <div class="i-label">Average reply rate on personalised multi-touch sequences across email, LinkedIn, and WhatsApp</div>
+        <div class="i-src">Email + LinkedIn + WhatsApp</div>
+      </div>
+      <div class="i-card reveal">
+        <span class="i-num orange" data-target="40" data-suffix="%">40%</span>
+        <div class="i-label">ICP-specific lead conversion through automated GTM funnels — Clay + Apollo + Leadmagic pipeline</div>
+        <div class="i-src">Clay · Apollo · Leadmagic</div>
+      </div>
+      <div class="i-card orange-bar reveal">
+        <span class="i-num">2</span>
+        <div class="i-label">Flagship annual PLF Convergence events — 100+ ICP decision-makers per room, Bengaluru & Hyderabad</div>
+        <div class="i-src">PLF Convergence · GTM-led fills</div>
+      </div>
+      <div class="i-card reveal">
+        <span class="i-num orange">150–200</span>
+        <div class="i-label">Event attendees driven per quarter across IPL & PLF events via coordinated multi-channel GTM campaigns</div>
+        <div class="i-src">Multi-channel outreach + automation</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SERVICES ── -->
+<section id="services">
+  <div class="wrap">
+    <div class="svc-head reveal">
+      <div>
+        <div class="eyebrow">Services</div>
+        <div class="sec-title">What You<br><em>Can Book.</em></div>
+      </div>
+      <p class="impact-sub" style="color:var(--text2)">
+        Scoped engagements — not vague retainers. Every build comes with a workflow doc, Loom walkthrough, and a handoff your team can actually run without me.
+      </p>
+    </div>
+
+    <div class="svc-grid">
+
+      <div class="svc reveal">
+        <div class="svc-num">SVC_01</div>
+        <div class="svc-icon">⚙</div>
+        <div class="svc-name">End-to-End GTM Engine</div>
+        <p class="svc-desc">Full system build — ICP definition, lead scraping, enrichment, multi-channel outreach, AI follow-ups, and a live analytics dashboard. Zero to pipeline.</p>
+        <div class="svc-chips"><span class="chip">Clay</span><span class="chip">Apollo</span><span class="chip">n8n</span><span class="chip">Zapier</span><span class="chip">Instantly</span><span class="chip">SuperAGI</span></div>
+        <a href="#book" class="svc-link">Book this →</a>
+      </div>
+
+      <div class="svc reveal">
+        <div class="svc-num">SVC_02</div>
+        <div class="svc-icon">✉</div>
+        <div class="svc-name">Cold Email Infrastructure</div>
+        <p class="svc-desc">Domain warmup, deliverability setup, sequence copywriting, A/B testing, and reply management. Built to hit 60%+ open rates from day one.</p>
+        <div class="svc-chips"><span class="chip">Instantly</span><span class="chip">Smartlead</span><span class="chip">PlusVibe</span><span class="chip">Snov.io</span><span class="chip">Brevo</span></div>
+        <a href="#book" class="svc-link">Book this →</a>
+      </div>
+
+      <div class="svc reveal">
+        <div class="svc-num">SVC_03</div>
+        <div class="svc-icon">🔗</div>
+        <div class="svc-name">Multi-Touch Outreach System</div>
+        <p class="svc-desc">Coordinated campaigns across email, LinkedIn, and WhatsApp — timed, personalised, and automated. One prospect, three touchpoints, zero manual effort.</p>
+        <div class="svc-chips"><span class="chip">WBizz</span><span class="chip">ConnectOut</span><span class="chip">Surfe</span><span class="chip">Lusha</span><span class="chip">PhantomBuster</span></div>
+        <a href="#book" class="svc-link">Book this →</a>
+      </div>
+
+      <div class="svc reveal">
+        <div class="svc-num">SVC_04</div>
+        <div class="svc-icon">⚡</div>
+        <div class="svc-name">Workflow Automation Build</div>
+        <p class="svc-desc">Custom n8n / Zapier workflows — lead routing, data enrichment pipelines, CRM syncs, Slack alerts, follow-up triggers. If it's repetitive, it gets automated.</p>
+        <div class="svc-chips"><span class="chip">n8n</span><span class="chip">Zapier</span><span class="chip">Activepieces</span><span class="chip">Make.com</span><span class="chip">Webhooks</span></div>
+        <a href="#book" class="svc-link">Book this →</a>
+      </div>
+
+      <div class="svc reveal">
+        <div class="svc-num">SVC_05</div>
+        <div class="svc-icon">🎬</div>
+        <div class="svc-name">AI Video Personalisation</div>
+        <p class="svc-desc">Personalised video outreach at scale — automated video generation per prospect using Creatomate + n8n. Name, company, context dynamically embedded in every video.</p>
+        <div class="svc-chips"><span class="chip">Creatomate</span><span class="chip">n8n</span><span class="chip">Brandjet.ai</span><span class="chip">SuperAGI</span><span class="chip">OpenAI API</span></div>
+        <a href="#book" class="svc-link">Book this →</a>
+      </div>
+
+      <div class="svc reveal">
+        <div class="svc-num">SVC_06</div>
+        <div class="svc-icon">🎯</div>
+        <div class="svc-name">Event GTM Campaign</div>
+        <p class="svc-desc">Full GTM for events — lead targeting, multi-channel outreach, registration automation, and on-ground coordination. 100+ ICP fills delivered. Twice.</p>
+        <div class="svc-chips"><span class="chip">Delightloop</span><span class="chip">WBizz</span><span class="chip">Brevo</span><span class="chip">Clay</span><span class="chip">Zapier</span></div>
+        <a href="#book" class="svc-link">Book this →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── SYSTEMS ── -->
+<section id="systems">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">Systems Built</div>
+      <div class="sec-title">Real Builds.<br><em>Real Results.</em></div>
+    </div>
+
+    <div class="sys-grid">
+
+      <div class="sys-card reveal">
+        <div class="sys-cat">GTM Engine · Adaptive Marketing India</div>
+        <div class="sys-title">End-to-End Outreach Engine — Scrape to Dashboard</div>
+        <p class="sys-desc">Built a complete GTM system — ICP scraping, enrichment, personalised multi-channel outreach, AI follow-ups, and a live reporting dashboard. 1,500+ qualified leads per quarter, 100+ hours of manual work eliminated monthly.</p>
+        <div class="flow">
+          <div class="f-node"><div class="f-box v">ICP Define</div><div class="f-tool">Clay</div></div>
+          <div class="f-arr">→</div>
+          <div class="f-node"><div class="f-box">Scrape</div><div class="f-tool">Apollo · Prosp</div></div>
+          <div class="f-arr">→</div>
+          <div class="f-node"><div class="f-box">Enrich</div><div class="f-tool">Lusha · Leadmagic</div></div>
+          <div class="f-arr">→</div>
+          <div class="f-node"><div class="f-box">Outreach</div><div class="f-tool">Instantly · WBizz</div></div>
+          <div class="f-arr">→</div>
+          <div class="f-node"><div class="f-box">AI Follow-up</div><div class="f-tool">n8n · SuperAGI</div></div>
+          <div class="f-arr">→</div>
+          <div class="f-node"><div class="f-box o">Dashboard</div><div class="f-tool">Sheets · Analytics</div></div>
+        </div>
+        <div class="sys-result">→ Result: <strong>1,500+ leads/qtr</strong> · 40% ICP conversion · 100h/mo saved</div>
+      </div>
+
+      <div class="sys-card reveal">
+        <div class="sys-cat">Flagship Event GTM · PLF Convergence</div>
+        <div class="sys-title">100+ ICP Decision-Makers in the Room — Twice</div>
+        <p class="sys-desc">Led GTM for two flagship annual PLF Convergence events (Bengaluru & Hyderabad). Targeted senior product and AI leaders with coordinated email, WhatsApp, and LinkedIn sequences. 100+ ICP-filled seats both times — 150–200 attendees per quarter across ongoing IPL & PLF events.</p>
+        <div class="flow">
+          <div class="f-node"><div class="f-box v">Target List</div><div class="f-tool">Clay · LI SN</div></div>
+          <div class="f-arr">→</div>
+          <div class="f-node"><div class="f-box">Email Seq</div><div class="f-tool">Brevo · PlusVibe</div></div>
+          <div class="f-arr">→</div>
+          <div class="f-node"><div class="f-box">WA Outreach</div><div class="f-tool">WBizz</div></div>
+          <div class="f-arr">→</div>
+          <div class="f-node"><div class="f-box">LI DMs</div><div class="f-tool">ConnectOut</div></div>
+          <div class="f-arr">→</div>
+          <div class="f-node"><div class="f-box o">Registrations</div><div class="f-tool">Zapier · Sheets</div></div>
+        </div>
+        <div class="sys-result">→ Result: <strong>100+ ICP/event</strong> · 2 flagship events · 150–200 attendees/qtr</div>
+      </div>
+
+      <div class="sys-card reveal">
+        <div class="sys-cat">AI Personalisation · Creatomate + n8n</div>
+        <div class="sys-title">Personalised Video Outreach Pipeline at Scale</div>
+        <p class="sys-desc">Built an n8n workflow that pulls prospect data, triggers Creatomate to generate a custom video per lead (name, company, context dynamically injected), then auto-sends via email. Zero manual production per video — fully orchestrated with API-level precision.</p>
+        <div class="flow">
+          <div class="f-node"><div class="f-box v">G-Sheets</div><div class="f-tool">Lead data</div></div>
+          <div class="f-arr">→</div>
+          <div class="f-node"><div class="f-box">Filter</div><div class="f-tool">n8n Logic</div></div>
+          <div class="f-arr">→</div>
+          <div class="f-node"><div class="f-box">Loop</div><div class="f-tool">n8n</div></div>
+          <div class="f-arr">→</div>
+          <div class="f-node"><div class="f-box">Gen Video</div><div class="f-tool">Creatomate API</div></div>
+          <div class="f-arr">→</div>
+          <div class="f-node"><div class="f-box">Update Row</div><div class="f-tool">Sheets</div></div>
+          <div class="f-arr">→</div>
+          <div class="f-node"><div class="f-box o">Send</div><div class="f-tool">Instantly</div></div>
+        </div>
+        <div class="sys-result">→ Result: <strong>100% automated</strong> · personalised video per lead · 0 manual steps</div>
+      </div>
+
+      <div class="sys-card reveal">
+        <div class="sys-cat">Cold Email Campaign · Institute of Product Leadership</div>
+        <div class="sys-title">9% Conversion Cold Email System — AI Workshop</div>
+        <p class="sys-desc">3-segment cold email campaign across 6,000 leads — fresh scrapes, dormant LSQ, and prior attendees. Founder-specific sequences with credibility-first hooks, social proof, and urgency laddering. 65–70% open rate, 9% conversion to paid registration at ₹1,499.</p>
+        <div class="flow">
+          <div class="f-node"><div class="f-box v">Segment</div><div class="f-tool">6K · 3 tiers</div></div>
+          <div class="f-arr">→</div>
+          <div class="f-node"><div class="f-box">Copywrite</div><div class="f-tool">Founder hooks</div></div>
+          <div class="f-arr">→</div>
+          <div class="f-node"><div class="f-box">Sequence</div><div class="f-tool">Instantly · Selzy</div></div>
+          <div class="f-arr">→</div>
+          <div class="f-node"><div class="f-box">A/B Test</div><div class="f-tool">Subject lines</div></div>
+          <div class="f-arr">→</div>
+          <div class="f-node"><div class="f-box o">Convert</div><div class="f-tool">₹1,499 reg.</div></div>
+        </div>
+        <div class="sys-result">→ Result: <strong>9% conversion</strong> · 65–70% open rate · 30–35% replies</div>
+      </div>
+
+      <div class="sys-card reveal">
+        <div class="sys-cat">Automation · Multi-Touch Prospect Sequences</div>
+        <div class="sys-title">3-Channel Coordinated Outreach — Email, LinkedIn, WhatsApp</div>
+        <p class="sys-desc">A coordinated outreach system hitting the same prospect across all three channels on a timed cadence — fully automated via n8n and Zapier. Each channel has bespoke copy, timing logic, and reply-detection to halt sequences automatically on response.</p>
+        <div class="flow">
+          <div class="f-node"><div class="f-box v">Lead In</div><div class="f-tool">Clay enriched</div></div>
+          <div class="f-arr">→</div>
+          <div class="f-node"><div class="f-box">Email D1</div><div class="f-tool">Instantly</div></div>
+          <div class="f-arr">→</div>
+          <div class="f-node"><div class="f-box">LI D3</div><div class="f-tool">ConnectOut</div></div>
+          <div class="f-arr">→</div>
+          <div class="f-node"><div class="f-box">WA D5</div><div class="f-tool">WBizz</div></div>
+          <div class="f-arr">→</div>
+          <div class="f-node"><div class="f-box">Reply?</div><div class="f-tool">n8n check</div></div>
+          <div class="f-arr">→</div>
+          <div class="f-node"><div class="f-box o">Route</div><div class="f-tool">CRM / Stop</div></div>
+        </div>
+        <div class="sys-result">→ Result: <strong>30–35% reply rate</strong> · 3 channels · 0 manual sends</div>
+      </div>
+
+      <div class="sys-card reveal">
+        <div class="sys-cat">Infrastructure · Intelligent Job Pipeline Automation</div>
+        <div class="sys-title">AI-Powered Talent Acquisition Outreach System</div>
+        <p class="sys-desc">Built an end-to-end automated pipeline that pulls job listings, enriches recruiter data, personalises outreach copy using AI, and sends sequenced messages to talent acquisition teams — complete with response tracking and CRM sync. Zero manual touches per application cycle.</p>
+        <div class="flow">
+          <div class="f-node"><div class="f-box v">Job Listings</div><div class="f-tool">Sheets API</div></div>
+          <div class="f-arr">→</div>
+          <div class="f-node"><div class="f-box">Find TA</div><div class="f-tool">Lusha · Apollo</div></div>
+          <div class="f-arr">→</div>
+          <div class="f-node"><div class="f-box">AI Write</div><div class="f-tool">OpenAI API</div></div>
+          <div class="f-arr">→</div>
+          <div class="f-node"><div class="f-box">Send</div><div class="f-tool">Gmail API</div></div>
+          <div class="f-arr">→</div>
+          <div class="f-node"><div class="f-box">Track</div><div class="f-tool">n8n · Sheets</div></div>
+          <div class="f-arr">→</div>
+          <div class="f-node"><div class="f-box o">CRM Sync</div><div class="f-tool">Zapier</div></div>
+        </div>
+        <div class="sys-result">→ Result: <strong>100% automated</strong> · personalised per role · full reply tracking</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── STACK ── -->
+<section id="stack">
+  <div class="wrap">
+    <div class="stack-layout">
+      <div class="reveal">
+        <div class="eyebrow">Tech Stack</div>
+        <div class="sec-title">The Full<br><em>Toolkit.</em></div>
+        <p class="stack-intro" style="margin-top:2rem">
+          25+ tools across the GTM stack — not just familiarity, but production-grade implementation across real client campaigns and live systems.
+        </p>
+      </div>
+
+      <div class="stack-rows reveal">
+        <div class="sk-row">
+          <span class="sk-cat">Automation</span>
+          <div class="sk-tools">
+            <span class="sk-chip">n8n</span><span class="sk-chip">Zapier</span><span class="sk-chip">Activepieces</span><span class="sk-chip">Make.com</span><span class="sk-chip">Pabbly</span>
+          </div>
+        </div>
+        <div class="sk-row">
+          <span class="sk-cat">Lead Gen & Enrichment</span>
+          <div class="sk-tools">
+            <span class="sk-chip">Clay</span><span class="sk-chip">Apollo</span><span class="sk-chip">Leadmagic</span><span class="sk-chip">Prosp</span><span class="sk-chip">Lusha</span><span class="sk-chip">Surfe</span><span class="sk-chip">Snov.io</span>
+          </div>
+        </div>
+        <div class="sk-row">
+          <span class="sk-cat">Cold Email</span>
+          <div class="sk-tools">
+            <span class="sk-chip">Instantly</span><span class="sk-chip">Smartlead</span><span class="sk-chip">PlusVibe</span><span class="sk-chip">Selzy</span><span class="sk-chip">Brevo</span>
+          </div>
+        </div>
+        <div class="sk-row">
+          <span class="sk-cat">LinkedIn Outreach</span>
+          <div class="sk-tools">
+            <span class="sk-chip">ConnectOut</span><span class="sk-chip">PhantomBuster</span><span class="sk-chip">Surfe</span><span class="sk-chip">LinkedIn SN</span>
+          </div>
+        </div>
+        <div class="sk-row">
+          <span class="sk-cat">WhatsApp</span>
+          <div class="sk-tools">
+            <span class="sk-chip">WBizz</span><span class="sk-chip">WhatsApp API</span><span class="sk-chip">Pabbly</span>
+          </div>
+        </div>
+        <div class="sk-row">
+          <span class="sk-cat">AI & Personalisation</span>
+          <div class="sk-tools">
+            <span class="sk-chip">SuperAGI</span><span class="sk-chip">OpenAI API</span><span class="sk-chip">Creatomate</span><span class="sk-chip">Brandjet.ai</span>
+          </div>
+        </div>
+        <div class="sk-row">
+          <span class="sk-cat">Gifting & Events</span>
+          <div class="sk-tools">
+            <span class="sk-chip">Delightloop</span><span class="sk-chip">Alyce</span><span class="sk-chip">Figma</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── BOOK ── -->
+<section id="book">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">Book a Task</div>
+      <div class="sec-title">Let's Build<br><em>Your System.</em></div>
+    </div>
+
+    <div class="book-layout">
+      <div class="reveal">
+        <p>Tell me what you're working on and the outcome you need. I'll reply within 24 hours with a scoped proposal — no fluff, no vague timelines, no retainer pressure.</p>
+        <div class="book-facts">
+          <div class="bf"><div class="bf-dot"></div>Reply within 24 hours, every time</div>
+          <div class="bf"><div class="bf-dot orange"></div>Scoped proposal before any commitment</div>
+          <div class="bf"><div class="bf-dot"></div>Handoff with SOPs + Loom walkthrough</div>
+          <div class="bf"><div class="bf-dot orange"></div><a href="https://www.linkedin.com/in/nischith-u-shetty" target="_blank">linkedin.com/in/nischith-u-shetty ↗</a></div>
+          <div class="bf"><div class="bf-dot"></div>ushettynischith@gmail.com</div>
+        </div>
+      </div>
+
+      <div class="book-form reveal">
+        <div class="form-label-top">// New Task Request</div>
+        <div id="contactForm">
+          <div class="form-row">
+            <div class="fg">
+              <label>Your Name</label>
+              <input type="text" id="fname" placeholder="Full name">
+            </div>
+            <div class="fg">
+              <label>Company</label>
+              <input type="text" id="fcompany" placeholder="Startup / Company">
+            </div>
+          </div>
+          <div class="fg">
+            <label>Email</label>
+            <input type="email" id="femail" placeholder="your@email.com">
+          </div>
+          <div class="fg">
+            <label>Service Needed</label>
+            <select id="fservice">
+              <option value="">select_service...</option>
+              <option>End-to-End GTM Engine</option>
+              <option>Cold Email Infrastructure</option>
+              <option>Multi-Touch Outreach System</option>
+              <option>Workflow Automation Build</option>
+              <option>AI Video Personalisation</option>
+              <option>Event GTM Campaign</option>
+              <option>Something Custom</option>
+            </select>
+          </div>
+          <div class="fg">
+            <label>Goal — what does success look like?</label>
+            <textarea id="fgoal" placeholder="E.g. Need 200 qualified leads/month from fintech founders in Bangalore. Currently doing it all manually..."></textarea>
+          </div>
+          <button class="submit-btn" onclick="handleSubmit()">Send Request →</button>
+          <p class="form-note">// Sends directly to Nishchith. No CRM drip. No spam. Just a real conversation about your system.</p>
+        </div>
+        <div class="success-box" id="successMsg">
+          <span class="big">Received.</span>
+          <p>// In your inbox within 24h, macha 🤝</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-logo">Nishchith<em>.</em></div>
+  <ul class="footer-nav">
+    <li><a href="#impact">Impact</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#systems">Systems</a></li>
+    <li><a href="#stack">Stack</a></li>
+    <li><a href="https://www.linkedin.com/in/nischith-u-shetty" target="_blank">LinkedIn ↗</a></li>
+  </ul>
+  <div class="footer-copy">© 2026 · Nishchith U Shetty · GTM & AI Automation Engineer · Bengaluru, IN</div>
+</footer>
+
+<script>
+/* Scroll reveal */
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+/* Counter animation */
+function animateCount(el) {
+  const t = parseFloat(el.dataset.target);
+  const sfx = el.dataset.suffix || '';
+  if(isNaN(t)) return;
+  let start = 0;
+  const step = t / 55;
+  const timer = setInterval(() => {
+    start = Math.min(start + step, t);
+    el.textContent = (t < 100 ? Math.round(start*10)/10 : Math.round(start).toLocaleString()) + sfx;
+    if(start >= t) clearInterval(timer);
+  }, 16);
+}
+
+const impObs = new IntersectionObserver(entries => {
+  if(entries[0].isIntersecting) {
+    document.querySelectorAll('.i-num[data-target]').forEach(animateCount);
+    impObs.disconnect();
+  }
+}, { threshold: 0.2 });
+const imp = document.querySelector('#impact');
+if(imp) impObs.observe(imp);
+
+/* Form submit */
+function handleSubmit() {
+  const name = document.getElementById('fname').value.trim();
+  const email = document.getElementById('femail').value.trim();
+  const service = document.getElementById('fservice').value;
+  const goal = document.getElementById('fgoal').value.trim();
+  if(!name || !email || !service || !goal) {
+    alert('Fill all fields — I need to know what you need!');
+    return;
+  }
+  const sub = encodeURIComponent('GTM Task Request: ' + service);
+  const body = encodeURIComponent(
+    'Name: '+name+'\nEmail: '+email+'\nCompany: '+document.getElementById('fcompany').value+
+    '\n\nService: '+service+'\n\nGoal:\n'+goal
+  );
+  window.location.href = 'mailto:ushettynischith@gmail.com?subject='+sub+'&body='+body;
+  document.getElementById('contactForm').style.display = 'none';
+  document.getElementById('successMsg').style.display = 'block';
+}
+
+/* Active nav */
+const sections = document.querySelectorAll('section[id]');
+window.addEventListener('scroll', () => {
+  let cur = '';
+  sections.forEach(s => { if(window.scrollY >= s.offsetTop - 80) cur = s.id; });
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.style.color = a.getAttribute('href') === '#'+cur ? 'var(--violet)' : '';
+  });
+}, { passive:true });
+</script>
+</body>
+</html>
